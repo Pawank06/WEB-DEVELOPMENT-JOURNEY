@@ -5,14 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMI Calculator</title>
+    <style>
+        body{
+            text-align: center;
+            margin: 20%;
+            padding: 15% 5%;
+        }
+    </style>
 </head>
 <body>
     <form action="/bmicalculator" method="post">
-
-        <input type="text" name="weight" placeholder="Enter your weight in pounds">
-        <input type="text" name="height" placeholder="Enter your height inches">
-        <button name="submit">submit</button>
-
+        <div class = "bmic">
+            <input type="text" name="weight" placeholder="Enter your weight in pounds">
+            <input type="text" name="height" placeholder="Enter your height inches">
+            <button name="submit">submit</button>
+        </div>
     </form>
     
 </body>
