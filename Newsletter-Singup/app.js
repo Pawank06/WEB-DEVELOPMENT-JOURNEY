@@ -39,10 +39,20 @@ app.post("/", function(req,res){
 
     const Options = {
         method: "POST",
-        auth: "pawan1:2df2746af8b680bb2daee9a30e44d19d-us11"
+        auth: "pawan1:5b188bbea2c94222105c735291ea0970-us11"
     }
 
     const request = https.request(url, Options, function(response){
+        
+        if(response.statusCode == 200){
+            res.sendFile(__dirname + "/success.html");
+        }
+        else{
+            res.sendFile(__dirname + "/failure.html");
+        }
+        
+        
+        
         response.on("data", function(data){
             console.log(JSON.parse(data));
         })
@@ -52,12 +62,20 @@ app.post("/", function(req,res){
 
 });
 
+app.post("/failure", function(req,res){
+
+    res.sendFile(__dirname + "/signup.html")
+
+});
+
 app.listen(3000,function(){
     console.log("Server running on port 3000");
 });
 
 //  API KEY
 // 2df2746af8b680bb2daee9a30e44d19d-us11
+
+// 5b188bbea2c94222105c735291ea0970-us11
 
 // AUDIENCE ID
 // fba8c7adc7
