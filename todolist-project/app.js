@@ -4,37 +4,61 @@ const { urlencoded } = require("body-parser");
 
 const app = express();
 
-var items = [];
+let items = ["Buy Food","Cook Food","Eat Food"];
+let workItems = ["Done work"];
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static("public"));
 
 app.set('view engine', 'ejs');
 
 app.get("/", function(req, res){
     
 
-    var today = new Date();
+    let today = new Date();
     
-    var option = {
+    let option = {
         weekday: "long",
         day: "numeric",
         month: "long"
     };
 
-    var day = today.toLocaleDateString("eng-US", option);
+    let day = today.toLocaleDateString("eng-US", option);
 
 
-    res.render("list", {kindOfDay: day, newListItems: items});
+    res.render("list", {listTitle: day, newListItems: items});
 
 });
 
 app.post("/", function(req,res){
 
-    var item = req.body.newItem;
-    items.push(item);
-    res.redirect("/");
+    let item = req.body.newItem;
+
+    if(req.body.list === "Work"){
+        workItems.push(item);
+        res.redirect("/work");
+    }
+    
+    else{
+        items.push(item);
+        res.redirect("/");
+    }
 
 });
+
+app.get("/work", function(req,res){
+
+    res.render("list", {listTitle: "Work List",newListItems: workItems });
+
+});
+
+// app.post("/work", function(req, res){
+
+    
+//     let item = req.body.newItem;
+//     workItems.push(item);
+//     res.redirect("/work")
+// });
 
 app.listen(3000, function(){
     console.log("Server running on port 3000");
