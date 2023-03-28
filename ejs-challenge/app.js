@@ -16,14 +16,34 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+
+
 app.get("/", function(req,res){
 
   res.render("home", {homeContent: homeStartingContent});
 })
 
+app.get("/about", function(req,res){
 
+  res.render("about", {aboutContents : aboutContent});
+})
 
+app.get("/contact", function(req,res){
+  res.render("contact", {contactContents : contactContent});
+})
 
+app.get("/compose", function(req,res){
+  res.render("compose");
+
+  
+})
+
+app.post("/compose", function(req, res){
+  const post = {
+    title: req.body.postBody, 
+    content: req.body.postTitle
+  }
+});
 
 
 
