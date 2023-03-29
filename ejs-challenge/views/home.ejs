@@ -3,4 +3,12 @@
 <h1>Home</h1>
 <p><%= homeContent %></p>
 
+<% postedContent.forEach(function(post){ %>
+
+    <div class="posts">
+        <h1><%= post.title %></h1>
+        <p><%= post.content %></p>
+    </div>
+<% }); %>
+
 <%- include('partials/footer'); -%>
