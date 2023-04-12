@@ -19,6 +19,8 @@ const itemsSchema = {
     name: String
 };
 
+
+
 const Item =  mongoose.model("Item", itemsSchema);
 
 const item1 = new Item ({
@@ -32,6 +34,14 @@ const item3 = new Item ({
 });
 
 const defaultItems = [item1,item2,item3];
+
+const listSchema = {
+    name: String,
+    item: [itemsSchema]
+};
+
+const List = mongoose.model("List", listSchema);
+
 // Item.insertMany(defaultItems)
 //       .then(function () {
 //         console.log("Successfully saved defult items to DB");
@@ -64,12 +74,10 @@ app.get("/", function(req, res){
         console.log(err);
       });
 
-    
-    
-
-    
-
 });
+
+// Dynamic name
+
 
 app.post("/", function(req,res){
 
@@ -81,15 +89,35 @@ app.post("/", function(req,res){
     item.save();
     res.redirect("/");
 
-    
+});
+
+app.get("/:customListName", function(req,res){
+
+    const customListName = req.params.customListName;
+    const list = new List({
+        name: customListName,
+        items: defaultItems
+    })
+ 
+    list.save();
 
 });
 
-app.get("/work", function(req,res){
+app.post("/delete", function(req,res){
+    const checkedItemId  = req.body.checkbox;
 
-    res.render("list", {listTitle: "Work List",newListItems: workItems });
+    Item.findByIdAndRemove(checkedItemId)
+    .then(function(){
+        console.log("Success");
+        res.redirect("/");
+    })
+    .catch(function(err){
+       console.log(err); 
+    })
 
 });
+
+
 
 // app.post("/work", function(req, res){
 
